@@ -1,6 +1,6 @@
 node_modules/
 .env
-.env.*
+.env.*  #idk what is this doing here
 dist/
 build/
 .cache/
