@@ -21,30 +21,59 @@ function App() {
   }
 
   return (
-    <div style={{ padding: "30px", fontFamily: "sans-serif" }}>
-      <h1>AI Smart Contract Auditor</h1>
-      <p>Paste your Solidity contract below and analyze security risks.</p>
+    <div id="root">
+      <header className="center" aria-labelledby="app-title">
+        <h1 id="app-title" className="pulse">AI Smart Contract Auditor</h1>
+        <p className="read-the-docs">Paste your Solidity contract below and analyze security risks.</p>
+      </header>
 
-      <textarea
-        rows="14"
-        style={{ width: "100%", fontFamily: "monospace" }}
-        placeholder="Paste Solidity code here..."
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-      />
+      <main>
+        <div className="card" role="region" aria-label="Input card">
+          <label className="card-title" htmlFor="source">Source Code</label>
+          <textarea
+            id="source"
+            rows="14"
+            className="terminal"
+            placeholder="Paste Solidity code here..."
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
 
-      <br /><br />
+          <div style={{ marginTop: '1rem', display: 'flex', gap: '0.6rem', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+            <button
+              className="btn btn-ghost"
+              onClick={() => { setCode(''); setResult(null); }}
+              type="button"
+            >
+              Reset
+            </button>
 
-      <button onClick={analyze} disabled={loading}>
-        {loading ? "Analyzing..." : "Analyze Contract"}
-      </button>
-
-      {result && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Audit Result</h3>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
+            <button
+              className="btn btn-primary"
+              onClick={analyze}
+              disabled={loading}
+              type="button"
+            >
+              {loading ? "Analyzing..." : "Analyze Contract"}
+            </button>
+          </div>
         </div>
-      )}
+
+        {result && (
+          <div className="card" style={{ marginTop: '1rem' }} role="region" aria-label="Audit results">
+            <h3 className="card-title">Audit Result</h3>
+            <pre className="terminal" aria-live="polite">{JSON.stringify(result, null, 2)}</pre>
+          </div>
+        )}
+      </main>
+
+      <footer className="app-footer">
+        <div className="stack" aria-hidden="true">
+          <span className="chip">AI</span>
+          <span className="chip">Security</span>
+          <span className="chip">Smart Contracts</span>
+        </div>
+      </footer>
     </div>
   );
 }
